@@ -17,7 +17,8 @@
     
     <xsl:template match="/">
         <xsl:for-each select=".//scenario">
-            <xsl:result-document href="{concat(replace(field[@name='name'],' ', '_'),'.sh')}">
+            <xsl:message>Writing <xsl:value-of select="concat(normalize-space(replace(./field[@name='name'],' ', '_')),'.sh')"/></xsl:message>
+            <xsl:result-document href="{concat(normalize-space(translate(./field[@name='name'],' []\{\}\)\(', '_')),'.sh')}">
             <xsl:value-of select="$bashprefix"/>
             <xsl:text>&#xa;</xsl:text>
             <xsl:text>pdu=SOMEFOLDER&#xa;</xsl:text><!-- hardcoded, not pretty but effective -->
@@ -44,9 +45,9 @@
                         )"/>
                 </xsl:if>
                 <xsl:for-each select="//xsltParams/list/transformationParameter">
-                    <xsl:value-of select="concat(//paramDescriptor/field[@name='localName']/String/data(),
+                    <xsl:value-of select="concat(./paramDescriptor/field[@name='localName']/String/data(),
                         '=&quot;',
-                        //field[@name='value']/String/data(),
+                        ./field[@name='value']/String/data(),
                         '&quot;'
                         )"/>
                 </xsl:for-each>
