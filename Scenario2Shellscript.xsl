@@ -32,19 +32,19 @@
                     field[@name='outputResource']/String,
                     ''
                     )"/>
-                <xsl:if test="//field[@name='cascadingStylesheets']/String-array/String">
-                    <xsl:for-each select="//field[@name='cascadingStylesheets']/String-array/String">
+                <xsl:if test=".//field[@name='cascadingStylesheets']/String-array/String">
+                    <xsl:for-each select=".//field[@name='cascadingStylesheets']/String-array/String">
                         <xsl:value-of select="concat(' -xsl:',
                             ./data()
                             )"/>
                     </xsl:for-each>
                 </xsl:if>
-                <xsl:if test="//field[@name='useConfigFile']/Boolean='true'">
+                <xsl:if test=".//field[@name='useConfigFile']/Boolean='true'">
                     <xsl:value-of select="concat(' -config:',
-                        //field[@name='configSystemID']/string/data()
+                        .//field[@name='configSystemID']/string/data()
                         )"/>
                 </xsl:if>
-                <xsl:for-each select="//xsltParams/list/transformationParameter">
+                <xsl:for-each select=".//xsltParams/list/transformationParameter">
                     <xsl:value-of select="concat(./paramDescriptor/field[@name='localName']/String/data(),
                         '=&quot;',
                         ./field[@name='value']/String/data(),
